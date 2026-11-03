@@ -1,4 +1,3 @@
-
 package com.ad.domain.model;
 
 public class Anunciante {
@@ -27,8 +26,12 @@ public class Anunciante {
         this.cnpj = cnpj;
     }
 
-    public void setNome(String nome) {
+    public Anunciante(Long id, String nome, String email, String cnpj) {
+        this(nome, email, cnpj);
+        this.id = id;
+    }
 
+    public void setNome(String nome) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Digite um nome");
         }
@@ -37,7 +40,6 @@ public class Anunciante {
     }
 
     public void setEmail(String email) {
-
         if (email == null || email.isBlank()) {
             throw new IllegalArgumentException("Digite um email");
         }
