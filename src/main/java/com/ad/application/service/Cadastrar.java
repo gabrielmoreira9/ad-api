@@ -2,7 +2,9 @@ package com.ad.application.service;
 
 import com.ad.application.port.out.SalvarAnunciantePort;
 import com.ad.domain.model.Anunciante;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Cadastrar{
 
     private final SalvarAnunciantePort salvarAnunciantePort;
