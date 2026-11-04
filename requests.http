@@ -1,8 +1,1 @@
-POST http://localhost:8080/anunciantes
-Content-Type: application/json
-
-{
-  "nome": "Teste",
-  "email": "teste@empresa.com",
-  "cnpj": "00000000000000"
-}
+GET http://localhost:8080/anunciantes
