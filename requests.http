@@ -1,9 +1,8 @@
-
 POST http://localhost:8080/anunciantes
 Content-Type: application/json
 
 {
-  "nome": "teste",
-  "email": "teste email",
-  "cnpj": "000000"
+  "nome": "Teste",
+  "email": "teste@empresa.com",
+  "cnpj": "00000000000000"
 }
