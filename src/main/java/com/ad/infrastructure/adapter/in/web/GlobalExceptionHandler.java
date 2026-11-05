@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.ad.domain.exception.AnuncianteNaoEncontradoExc;
 
 import java.util.stream.Collectors;
 
@@ -46,6 +47,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
+                .body(erro);
+    }
+
+    @ExceptionHandler(AnuncianteNaoEncontradoExc.class)
+    public ResponseEntity<ApiError> tratarAnuncianteNaoEncontrado(AnuncianteNaoEncontradoExc exception){
+        ApiError erro = new ApiError(
+                HttpStatus.NOT_FOUND.value(),
+                "Anunciante não encontrado",
+                exception.getMessage()
+        );
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
                 .body(erro);
     }
 }
