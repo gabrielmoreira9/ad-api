@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.ad.domain.exception.AnuncianteNaoEncontradoExc;
+import com.ad.domain.exception.AnuncianteInvalidoExc;
 
 import java.util.stream.Collectors;
 
@@ -34,17 +35,13 @@ public class GlobalExceptionHandler {
                 .body(erro);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiError> tratarArgumentoInvalido(
-            IllegalArgumentException exception
-    ) {
-
+    @ExceptionHandler (AnuncianteInvalidoExc.class)
+    public ResponseEntity<ApiError> tratarAnuncianteInvalido(AnuncianteInvalidoExc exception){
         ApiError erro = new ApiError(
                 HttpStatus.BAD_REQUEST.value(),
-                "Requisição inválida",
+                "Anunciante Inválido",
                 exception.getMessage()
         );
-
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(erro);

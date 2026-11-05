@@ -1,5 +1,7 @@
 package com.ad.domain.model;
 
+import com.ad.domain.exception.AnuncianteInvalidoExc;
+
 public class Anunciante {
 
     private Long id;
@@ -10,15 +12,15 @@ public class Anunciante {
     public Anunciante(String nome, String email, String cnpj) {
 
         if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("Digite um nome");
+            throw new AnuncianteInvalidoExc("Digite um nome");
         }
 
         if (cnpj == null || cnpj.isBlank()) {
-            throw new IllegalArgumentException("Digite um CNPJ");
+            throw new AnuncianteInvalidoExc("Digite um CNPJ");
         }
 
         if (email == null || email.isBlank()) {
-            throw new IllegalArgumentException("Digite um email");
+            throw new AnuncianteInvalidoExc("Digite um email");
         }
 
         this.nome = nome;
@@ -33,7 +35,7 @@ public class Anunciante {
 
     public void setNome(String nome) {
         if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("Digite um nome");
+            throw new AnuncianteInvalidoExc("Digite um nome");
         }
 
         this.nome = nome;
@@ -41,7 +43,7 @@ public class Anunciante {
 
     public void setEmail(String email) {
         if (email == null || email.isBlank()) {
-            throw new IllegalArgumentException("Digite um email");
+            throw new AnuncianteInvalidoExc("Digite um email");
         }
 
         this.email = email;
