@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.ad.domain.exception.AnuncianteNaoEncontradoExc;
 import com.ad.domain.exception.AnuncianteInvalidoExc;
 
@@ -12,6 +14,8 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> tratarErroDeValidacao(
@@ -35,7 +39,7 @@ public class GlobalExceptionHandler {
                 .body(erro);
     }
 
-    @ExceptionHandler (AnuncianteInvalidoExc.class)
+    @ExceptionHandler(AnuncianteInvalidoExc.class)
     public ResponseEntity<ApiError> tratarAnuncianteInvalido(AnuncianteInvalidoExc exception){
         ApiError erro = new ApiError(
                 HttpStatus.BAD_REQUEST.value(),
@@ -56,6 +60,19 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(erro);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> tratarErroInesperado(Exception exception){
+        logger.error("Erro inesperado", exception);
+        ApiError erro = new ApiError(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Erro inesperado",
+                "Ocorreu um erro. Tente novamente mais tarde."
+        );
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(erro);
     }
 }

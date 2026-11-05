@@ -1,1 +1,1 @@
-GET http://localhost:8080/anunciantes/999
+GET http://localhost:8080/anunciantes/teste-erro
