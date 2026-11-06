@@ -7,10 +7,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import org.mockito.ArgumentCaptor;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class CadastrarTest {
@@ -30,6 +31,12 @@ class CadastrarTest {
         Anunciante resultado = cadastrar.executar("Empresa", "contato@empresa.com", "12345678000100");
 
         assertSame(anuncianteSalvo, resultado);
-        verify(salvarAnunciantePort).salvar(org.mockito.ArgumentMatchers.any(Anunciante.class));
+        ArgumentCaptor <Anunciante> captor = ArgumentCaptor.forClass(Anunciante.class);
+        verify(salvarAnunciantePort).salvar(captor.capture());
+
+        Anunciante enviado = captor.getValue();
+        assertEquals("Empresa", enviado.getNome());
+        assertEquals("contato@empresa.com", enviado.getEmail());
+        assertEquals("12345678000100", enviado.getCnpj());
     }
 }
