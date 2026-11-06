@@ -1,11 +1,13 @@
 package com.ad.infrastructure.adapter.in.web;
 
 import com.ad.application.service.ListarAnunciante;
+import com.ad.domain.exception.AnuncianteNaoEncontradoExc;
 import com.ad.domain.model.Anunciante;
 import com.ad.application.service.Cadastrar;
 import com.ad.application.service.BuscarAnunciantePorId;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
