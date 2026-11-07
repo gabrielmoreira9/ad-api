@@ -3,6 +3,7 @@ package com.ad.infrastructure.adapter.in.web;
 import com.ad.application.service.BuscarAnunciantePorId;
 import com.ad.application.service.Cadastrar;
 import com.ad.application.service.ListarAnunciante;
+import com.ad.domain.exception.AnuncianteNaoEncontradoExc;
 import com.ad.domain.model.Anunciante;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,5 +101,30 @@ class AnuncianteControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.nome").value("Empresa"));
+    }
+
+    @Test
+    void deveRetornarErroQuandoDadosInvalidos() throws Exception{
+        mockMvc.perform(post("/anunciantes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                                 {
+                                     "nome": "",
+                                     "email": "",
+                                     "cnpj": ""
+                                 }
+                                 """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.erro").value("Erro de validação"));
+    }
+
+    @Test
+    void deveRetornar404QuandoAnuncianteNaoEncontrado() throws Exception {
+        when(buscarAnunciantePorId.executar(99L)).thenThrow(new AnuncianteNaoEncontradoExc(99L));
+        mockMvc.perform(get("/anunciantes/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.erro").value("Anunciante não encontrado"));
     }
 }
